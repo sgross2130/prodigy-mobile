@@ -18,8 +18,9 @@
 {{#Dances}}
 <li class="ui-li ui-li-static ui-btn-up-c">
 	<div class="ui-grid-b">
-		<div class="ui-block-a" style="width:50px"><h3 class="ui-li-heading">999</h3></div>
-        <div class="ui-block-b">
+		<div class="ui-block-a" style="width:40px"><h3 class="ui-li-heading">999</h3></div>
+        <div class="ui-block-b" style="width:150px"><h3 class="ui-li-heading">{{Category}}</h3></div>
+        <div class="ui-block-c">
         <h3 class="ui-li-heading">{{DanceName}}</h3>
         <p class="ui-li-desc">
         {{#each Dancer}}
@@ -28,9 +29,7 @@
         {{/each}}
         </p>
         </div>
-		<div class="ui-block-c">
-        <h3 class="ui-li-heading">{{Category}}</h3>
-		</div>
+
 	</div>
 </li>
 {{/Dances}}
