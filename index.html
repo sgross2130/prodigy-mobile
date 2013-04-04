@@ -18,32 +18,49 @@
 
 
 <script id="some-template" type="text/x-handlebars-template">
-<li data-role="list-divider" class="ui-bar-a ui-li ui-li-divider ui-bar-b" role="heading"><h1 class="ui-li-heading">Friday, March 15</h1></li>
-<li data-role="list-divider" data-theme="b" role="heading" class="ui-li ui-li-divider ui-bar-b ">Solo U9</li>
 {{#Dances}}
-<li class="ui-li ui-li-static ui-btn-up-c">
-	<div style="width:40px;float:left"><h3 class="ui-li-heading">999</h3></div>
-    <div style="width:250px">
-        <h3 class="ui-li-heading">{{DanceName}}</h3>
-        <p class="ui-li-desc">
-        {{Category}}<br>
+        {{#if IsDate}}
+            <li data-role="list-divider" class="ui-bar-a ui-li ui-li-divider ui-bar-b"><h1 class="ui-li-heading">{{DanceName}}</h1></li>
+        {{/if}}
         
-        {{#each Dancer}}
+        {{#if IsCategory}}
+            <li data-role="list-divider" class="ui-li ui-li-divider ui-bar-b">{{DanceName}}</li>
+        {{/if}}
+        
+        {{#if IsAwards}}
+            <li data-role="list-divider" class="ui-bar-d ui-li ui-li-divider ui-bar-b">{{DanceName}}</li>
+        {{/if}}
+        
+        {{#if IsDance}}
+            <li class="ui-li ui-li-static ui-btn-up-c">
+	            <div style="width:40px;float:left"><h3 class="ui-li-heading">###</h3></div>
+                <div>
+                <h3 class="ui-li-heading">{{DanceName}}</h3>
+                <p class="ui-li-desc">
+                    {{Category}}<br>
+                    {{#each Dancer}}
             
-            {{FirstName}} {{LastName}}
-            {{#if Dancer.length}},{{/if}}
-        {{/each}}
-        </p>
-        </div>
-
-	</div>
-</li>
+                        {{FirstName}} {{LastName}}
+                        {{#if Dancer.length}},{{/if}}
+                    {{/each}}
+                </p>
+                </div>
+            </li>
+        {{/if}}
 {{/Dances}}
 </script>
 
 
-<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
 
+<script src="http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    Handlebars.registerHelper('ifCond', function (v1, options) {
+        if (v1 == 'Awards') {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+</script>
 <script>
 $(document).ready(function() {
   	var source   = $("#some-template").html();
@@ -52,100 +69,104 @@ $(document).ready(function() {
   	var data = {
   	    "Dances": 
   				[
-{ "Dancer": [{ "LastName": "Healy", "FirstName": "Adrienne"}], "DanceName": "Apologize", "AgeGroup": "12-14 y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Healy", "FirstName": "Adrienne"}], "DanceName": "Reason", "AgeGroup": "12-14 y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "Takes one to know one", "AgeGroup": "12-14 y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "Odette", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Snyder", "FirstName": "Mariah"}], "DanceName": "All my mistakes", "AgeGroup": "12-14 y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Perkins", "FirstName": "Sydney"}], "DanceName": "Time Flies", "AgeGroup": "15-19 y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Snyder", "FirstName": "Mariah"}], "DanceName": "Never Quit loving you", "AgeGroup": "12-14 y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "German", "FirstName": "Jada"}], "DanceName": "I'm gonna love you", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "German", "FirstName": "Jada"}], "DanceName": "Eyes", "AgeGroup": "12-14y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Ruano", "FirstName": "Gracie"}], "DanceName": "", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Ruano", "FirstName": "Gracie"}], "DanceName": "The Arrival", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "", "AgeGroup": "12-14y", "Category": "Pointe" },
-{ "Dancer": [{ "LastName": "Swaykus", "FirstName": "Omar"}], "DanceName": "Animus Vox", "AgeGroup": "15-19", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Rivera", "FirstName": "Omar"}], "DanceName": "Slow and Steady", "AgeGroup": "15-19y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "German", "FirstName": "Joziah"}], "DanceName": "Run away baby", "AgeGroup": "9-11y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Amandalynn"}], "DanceName": "Let's hear it for the boy", "AgeGroup": "8 and under", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Wade", "FirstName": "Lindsey"}], "DanceName": "Gamzatti Variation", "AgeGroup": "8 and under", "Category": "Ballet" },
-{ "Dancer": [{ "LastName": "Tepedino", "FirstName": "Skyler"}], "DanceName": "The Meadow", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Pereyra", "FirstName": "Stacey"}], "DanceName": "My new philosophy", "AgeGroup": "9-11y", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Cosentino", "FirstName": "Ava"}], "DanceName": "Dreamcatcher", "AgeGroup": "12-14y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Cosentino", "FirstName": "Ava"}], "DanceName": "Waking Dream", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Katelyn"}], "DanceName": "Scars", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Lauren"}], "DanceName": "Call me a princess", "AgeGroup": "8 and under", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Lauren"}], "DanceName": "Biggie", "AgeGroup": "8 and under", "Category": "Hip Hop" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Natallie"}], "DanceName": "I can't do it alone", "AgeGroup": "12-14y", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Campbell", "FirstName": "Erica"}], "DanceName": "One to Six Hundred", "AgeGroup": "12-14y", "Category": "Modern" },
-{ "Dancer": [{ "LastName": "Campbell", "FirstName": "Erica"}], "DanceName": "People Help the People", "AgeGroup": "", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Campbell", "FirstName": "Megan"}], "DanceName": "Not Your Problem", "AgeGroup": "15-19", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Plumer", "FirstName": "Ellie"}], "DanceName": "Porcelain Fist", "AgeGroup": "12-14 y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Garst", "FirstName": "Natallie"}], "DanceName": "Put It Down", "AgeGroup": "12-14y", "Category": "Hip Hop" },
-{ "Dancer": [{ "LastName": "Wade", "FirstName": "Lindsey"}], "DanceName": "Sort Of", "AgeGroup": "8 and under", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Tepedino", "FirstName": "Skyler"}], "DanceName": "Arms", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Butler", "FirstName": "Brooke"}], "DanceName": "Hit Me With A Hot Note", "AgeGroup": "12-14 y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Pereyra", "FirstName": "Stacey"}], "DanceName": "", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Campbell", "FirstName": "Megan"}], "DanceName": "Ship Song", "AgeGroup": "15-19", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Plumer", "FirstName": "Ellie"}], "DanceName": "Crazy Love", "AgeGroup": "12-14y", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Plumer", "FirstName": "Sophie"}], "DanceName": "Speaking French", "AgeGroup": "9-11y", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Sass", "FirstName": "Tatum"}], "DanceName": "Red Football", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Wooley", "FirstName": "Cierra"}], "DanceName": "Rock God", "AgeGroup": "8 and under", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Smith", "FirstName": "Jillian"}], "DanceName": "The Mad Hatter", "AgeGroup": "12-14y", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Wehrle", "FirstName": "Erica"}], "DanceName": "Secrets", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Cooper", "FirstName": "Avery"}], "DanceName": "Dream On", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Cooper", "FirstName": "Avery"}], "DanceName": "Sky Fall", "AgeGroup": "12-14y", "Category": "Open" },
-{ "Dancer": [{ "LastName": "Davidson", "FirstName": "Reagan"}], "DanceName": "Party Girl", "AgeGroup": "8 and under", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Couch", "FirstName": "Madison"}], "DanceName": "What the Water Gave Me", "AgeGroup": "9-11y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Nangle", "FirstName": "Keighan"}], "DanceName": "Pas de trios Variation", "AgeGroup": "9-11y", "Category": "Ballet" },
-{ "Dancer": [{ "LastName": "Lee", "FirstName": "Lexi"}], "DanceName": "", "AgeGroup": "15-19y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Cook", "FirstName": "Madie"}], "DanceName": "Crazy", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "O'Brien", "FirstName": "Hannah"}], "DanceName": "That Wasn't Me", "AgeGroup": "15-19", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Walker", "FirstName": "Delaney"}], "DanceName": "Diamonds are a Girls Best Friend", "AgeGroup": "9-11y", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Leonard", "FirstName": "Macy"}], "DanceName": "Gravity Happens", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Garwaki", "FirstName": "Gianna"}], "DanceName": "What I Like about You", "AgeGroup": "8 and under", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Garcia", "FirstName": "Amanda"}], "DanceName": "Can't Leave You", "AgeGroup": "15-19", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Karim", "FirstName": "Hannah"}], "DanceName": "Home", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Sartuche", "FirstName": "Alyssa"}], "DanceName": "tba", "AgeGroup": "9-11y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Sutherland", "FirstName": "Emma"}], "DanceName": "Little Bird", "AgeGroup": "9-11y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Sotero", "FirstName": "Arianna"}], "DanceName": "tba", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Lee", "FirstName": "Lexi"}], "DanceName": "Toxic", "AgeGroup": "15-19", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Pawloski", "FirstName": "Maorgan"}], "DanceName": "Heal For The Honey", "AgeGroup": "15-19", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "?", "FirstName": ""}], "DanceName": "This Cats on a Hot Tin Roof", "AgeGroup": "", "Category": "" },
-{ "Dancer": [{ "LastName": "Olson", "FirstName": "Keaten"}], "DanceName": "Home", "AgeGroup": "12-14y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Lajoie", "FirstName": "Meghan"}], "DanceName": "Unconditional", "AgeGroup": "15-19", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Fromm", "FirstName": "Kayla"}], "DanceName": "Breathe No More", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Miksch", "FirstName": "Lainey"}], "DanceName": "Funky Town", "AgeGroup": "12-14y", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Bresnahan", "FirstName": "Emily"}], "DanceName": "Dream", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Olson", "FirstName": "Keaten"}], "DanceName": "Hey Hey", "AgeGroup": "12-14y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Dupuy", "FirstName": "Chloe"}], "DanceName": "Alive", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Karim", "FirstName": "Hannah"}], "DanceName": "TBA", "AgeGroup": "9-11y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Kinsey", "FirstName": "Kaitlin"}], "DanceName": "Heart Cry", "AgeGroup": "15-19y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Sutherland", "FirstName": "Emma"}], "DanceName": "Salvation", "AgeGroup": "9-11y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Hall", "FirstName": "Paige"}], "DanceName": "What I've Done", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Dupuy", "FirstName": "Chloe"}], "DanceName": "Sleeping Beauty Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
-{ "Dancer": [{ "LastName": "Nangle", "FirstName": "Keighan"}], "DanceName": "The Show", "AgeGroup": "9-11y", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Bingham", "FirstName": "Lauren"}], "DanceName": "Lady In Spain", "AgeGroup": "9-11y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Davis", "FirstName": "Kendol"}], "DanceName": "So Long, Lonesome", "AgeGroup": "12-14y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Davis", "FirstName": "Kendol"}], "DanceName": "Raymonda Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
-{ "Dancer": [{ "LastName": "O'Brien", "FirstName": "Hannah"}], "DanceName": "Gonna Get Throught This", "AgeGroup": "15-19y", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Gross", "FirstName": "Paige"}], "DanceName": "Big Blonde and Beatutiful", "AgeGroup": "8 and under", "Category": "Musical Theater" },
-{ "Dancer": [{ "LastName": "Smerud", "FirstName": "Kirsten"}], "DanceName": "Respect", "AgeGroup": "9-11y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Smerud", "FirstName": "Kayleigh"}], "DanceName": "I Won't Give Up", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Copeland", "FirstName": "Charlotte"}], "DanceName": "Raymonda Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
-{ "Dancer": [{ "LastName": "Gerrish", "FirstName": "Claire"}], "DanceName": "Use Somebody", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Rodriguez", "FirstName": "Dylan"}], "DanceName": "Rather Go Blind", "AgeGroup": "15-19y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "Rodriguez", "FirstName": "Dylan"}], "DanceName": "", "AgeGroup": "15-19y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "Fairy Doll Variation", "AgeGroup": "9-11y", "Category": "Ballet" },
-{ "Dancer": [{ "LastName": "Gross", "FirstName": "Paige"}], "DanceName": "Boys", "AgeGroup": "8 and under", "Category": "Tap" },
-{ "Dancer": [{ "LastName": "Copeland", "FirstName": "Anabelle"}], "DanceName": "Weight Of The World", "AgeGroup": "15-19y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Copeland", "FirstName": "Charlotte"}], "DanceName": "Yellow", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Iglesias", "FirstName": "Devon"}], "DanceName": "Everybody Hurts", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "Huff", "FirstName": "Kennedy"}], "DanceName": "My Skin", "AgeGroup": "12-14y", "Category": "Contemporary" },
-{ "Dancer": [{ "LastName": "Huff", "FirstName": "Kennedy"}], "DanceName": "Rising Sun", "AgeGroup": "12-14y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "Nobody Does It Like Me", "AgeGroup": "9-11y", "Category": "Jazz" },
-{ "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "I Won't Look Back", "AgeGroup": "9-11y", "Category": "Lyrical" },
-{ "Dancer": [{ "LastName": "German", "FirstName": "Jada" }, { "LastName": "Karim", "FirstName": "Hannah" }, { "LastName": "Sartuche", "FirstName": "Alyssa"}], "DanceName": "Is Love Alive", "AgeGroup": "9-11y", "Category": "Lyrical" }
+{ "IsDance": false, "IsDate": true, "IsCategory": false, "IsAwards": false, "Dancer": [], "DanceName": "Friday April 5", "AgeGroup": "", "Category": "" },
+{ "IsDance": false, "IsDate": false, "IsCategory": true, "IsAwards": false, "Dancer": [], "DanceName": "Solo U9", "AgeGroup": "", "Category": "" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Healy", "FirstName": "Adrienne"}], "DanceName": "Apologize", "AgeGroup": "12-14 y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Healy", "FirstName": "Adrienne"}], "DanceName": "Reason", "AgeGroup": "12-14 y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "Takes one to know one", "AgeGroup": "12-14 y", "Category": "Lyrical" },
+{ "IsDance": false, "IsDate": false, "IsCategory": false, "IsAwards": true, "Dancer": [], "DanceName": "Awards", "AgeGroup": "", "Category": "" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "Odette", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Snyder", "FirstName": "Mariah"}], "DanceName": "All my mistakes", "AgeGroup": "12-14 y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Perkins", "FirstName": "Sydney"}], "DanceName": "Time Flies", "AgeGroup": "15-19 y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Snyder", "FirstName": "Mariah"}], "DanceName": "Never Quit loving you", "AgeGroup": "12-14 y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "German", "FirstName": "Jada"}], "DanceName": "I'm gonna love you", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "German", "FirstName": "Jada"}], "DanceName": "Eyes", "AgeGroup": "12-14y", "Category": "Contemporary" },
+{ "IsDance": false, "IsDate": false, "IsCategory": true, "IsAwards": false, "Dancer": [], "DanceName": "Solo U10", "AgeGroup": "", "Category": "" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Ruano", "FirstName": "Gracie"}], "DanceName": "", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Ruano", "FirstName": "Gracie"}], "DanceName": "The Arrival", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Swaykus", "FirstName": "Julianne"}], "DanceName": "", "AgeGroup": "12-14y", "Category": "Pointe" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Swaykus", "FirstName": "Omar"}], "DanceName": "Animus Vox", "AgeGroup": "15-19", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Rivera", "FirstName": "Omar"}], "DanceName": "Slow and Steady", "AgeGroup": "15-19y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "German", "FirstName": "Joziah"}], "DanceName": "Run away baby", "AgeGroup": "9-11y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Amandalynn"}], "DanceName": "Let's hear it for the boy", "AgeGroup": "8 and under", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Wade", "FirstName": "Lindsey"}], "DanceName": "Gamzatti Variation", "AgeGroup": "8 and under", "Category": "Ballet" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Tepedino", "FirstName": "Skyler"}], "DanceName": "The Meadow", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Pereyra", "FirstName": "Stacey"}], "DanceName": "My new philosophy", "AgeGroup": "9-11y", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Cosentino", "FirstName": "Ava"}], "DanceName": "Dreamcatcher", "AgeGroup": "12-14y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Cosentino", "FirstName": "Ava"}], "DanceName": "Waking Dream", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Katelyn"}], "DanceName": "Scars", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Lauren"}], "DanceName": "Call me a princess", "AgeGroup": "8 and under", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Lauren"}], "DanceName": "Biggie", "AgeGroup": "8 and under", "Category": "Hip Hop" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Natallie"}], "DanceName": "I can't do it alone", "AgeGroup": "12-14y", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Campbell", "FirstName": "Erica"}], "DanceName": "One to Six Hundred", "AgeGroup": "12-14y", "Category": "Modern" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Campbell", "FirstName": "Erica"}], "DanceName": "People Help the People", "AgeGroup": "", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Campbell", "FirstName": "Megan"}], "DanceName": "Not Your Problem", "AgeGroup": "15-19", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Plumer", "FirstName": "Ellie"}], "DanceName": "Porcelain Fist", "AgeGroup": "12-14 y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garst", "FirstName": "Natallie"}], "DanceName": "Put It Down", "AgeGroup": "12-14y", "Category": "Hip Hop" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Wade", "FirstName": "Lindsey"}], "DanceName": "Sort Of", "AgeGroup": "8 and under", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Tepedino", "FirstName": "Skyler"}], "DanceName": "Arms", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Butler", "FirstName": "Brooke"}], "DanceName": "Hit Me With A Hot Note", "AgeGroup": "12-14 y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Pereyra", "FirstName": "Stacey"}], "DanceName": "", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Campbell", "FirstName": "Megan"}], "DanceName": "Ship Song", "AgeGroup": "15-19", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Plumer", "FirstName": "Ellie"}], "DanceName": "Crazy Love", "AgeGroup": "12-14y", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Plumer", "FirstName": "Sophie"}], "DanceName": "Speaking French", "AgeGroup": "9-11y", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Sass", "FirstName": "Tatum"}], "DanceName": "Red Football", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Wooley", "FirstName": "Cierra"}], "DanceName": "Rock God", "AgeGroup": "8 and under", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Smith", "FirstName": "Jillian"}], "DanceName": "The Mad Hatter", "AgeGroup": "12-14y", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Wehrle", "FirstName": "Erica"}], "DanceName": "Secrets", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Cooper", "FirstName": "Avery"}], "DanceName": "Dream On", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Cooper", "FirstName": "Avery"}], "DanceName": "Sky Fall", "AgeGroup": "12-14y", "Category": "Open" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Davidson", "FirstName": "Reagan"}], "DanceName": "Party Girl", "AgeGroup": "8 and under", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Couch", "FirstName": "Madison"}], "DanceName": "What the Water Gave Me", "AgeGroup": "9-11y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Nangle", "FirstName": "Keighan"}], "DanceName": "Pas de trios Variation", "AgeGroup": "9-11y", "Category": "Ballet" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Lee", "FirstName": "Lexi"}], "DanceName": "", "AgeGroup": "15-19y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Cook", "FirstName": "Madie"}], "DanceName": "Crazy", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "O'Brien", "FirstName": "Hannah"}], "DanceName": "That Wasn't Me", "AgeGroup": "15-19", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Walker", "FirstName": "Delaney"}], "DanceName": "Diamonds are a Girls Best Friend", "AgeGroup": "9-11y", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Leonard", "FirstName": "Macy"}], "DanceName": "Gravity Happens", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garwaki", "FirstName": "Gianna"}], "DanceName": "What I Like about You", "AgeGroup": "8 and under", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Garcia", "FirstName": "Amanda"}], "DanceName": "Can't Leave You", "AgeGroup": "15-19", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Karim", "FirstName": "Hannah"}], "DanceName": "Home", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Sartuche", "FirstName": "Alyssa"}], "DanceName": "tba", "AgeGroup": "9-11y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Sutherland", "FirstName": "Emma"}], "DanceName": "Little Bird", "AgeGroup": "9-11y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Sotero", "FirstName": "Arianna"}], "DanceName": "tba", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Lee", "FirstName": "Lexi"}], "DanceName": "Toxic", "AgeGroup": "15-19", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Pawloski", "FirstName": "Maorgan"}], "DanceName": "Heal For The Honey", "AgeGroup": "15-19", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "?", "FirstName": ""}], "DanceName": "This Cats on a Hot Tin Roof", "AgeGroup": "", "Category": "" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Olson", "FirstName": "Keaten"}], "DanceName": "Home", "AgeGroup": "12-14y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Lajoie", "FirstName": "Meghan"}], "DanceName": "Unconditional", "AgeGroup": "15-19", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Fromm", "FirstName": "Kayla"}], "DanceName": "Breathe No More", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Miksch", "FirstName": "Lainey"}], "DanceName": "Funky Town", "AgeGroup": "12-14y", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Bresnahan", "FirstName": "Emily"}], "DanceName": "Dream", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Olson", "FirstName": "Keaten"}], "DanceName": "Hey Hey", "AgeGroup": "12-14y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Dupuy", "FirstName": "Chloe"}], "DanceName": "Alive", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Karim", "FirstName": "Hannah"}], "DanceName": "TBA", "AgeGroup": "9-11y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Kinsey", "FirstName": "Kaitlin"}], "DanceName": "Heart Cry", "AgeGroup": "15-19y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Sutherland", "FirstName": "Emma"}], "DanceName": "Salvation", "AgeGroup": "9-11y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Hall", "FirstName": "Paige"}], "DanceName": "What I've Done", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Dupuy", "FirstName": "Chloe"}], "DanceName": "Sleeping Beauty Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Nangle", "FirstName": "Keighan"}], "DanceName": "The Show", "AgeGroup": "9-11y", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Bingham", "FirstName": "Lauren"}], "DanceName": "Lady In Spain", "AgeGroup": "9-11y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Davis", "FirstName": "Kendol"}], "DanceName": "So Long, Lonesome", "AgeGroup": "12-14y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Davis", "FirstName": "Kendol"}], "DanceName": "Raymonda Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "O'Brien", "FirstName": "Hannah"}], "DanceName": "Gonna Get Throught This", "AgeGroup": "15-19y", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Gross", "FirstName": "Paige"}], "DanceName": "Big Blonde and Beatutiful", "AgeGroup": "8 and under", "Category": "Musical Theater" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Smerud", "FirstName": "Kirsten"}], "DanceName": "Respect", "AgeGroup": "9-11y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Smerud", "FirstName": "Kayleigh"}], "DanceName": "I Won't Give Up", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Copeland", "FirstName": "Charlotte"}], "DanceName": "Raymonda Variation", "AgeGroup": "12-14y", "Category": "Pointe" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Gerrish", "FirstName": "Claire"}], "DanceName": "Use Somebody", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Rodriguez", "FirstName": "Dylan"}], "DanceName": "Rather Go Blind", "AgeGroup": "15-19y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Rodriguez", "FirstName": "Dylan"}], "DanceName": "", "AgeGroup": "15-19y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "Fairy Doll Variation", "AgeGroup": "9-11y", "Category": "Ballet" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Gross", "FirstName": "Paige"}], "DanceName": "Boys", "AgeGroup": "8 and under", "Category": "Tap" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Copeland", "FirstName": "Anabelle"}], "DanceName": "Weight Of The World", "AgeGroup": "15-19y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Copeland", "FirstName": "Charlotte"}], "DanceName": "Yellow", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Iglesias", "FirstName": "Devon"}], "DanceName": "Everybody Hurts", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Huff", "FirstName": "Kennedy"}], "DanceName": "My Skin", "AgeGroup": "12-14y", "Category": "Contemporary" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "Huff", "FirstName": "Kennedy"}], "DanceName": "Rising Sun", "AgeGroup": "12-14y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "Nobody Does It Like Me", "AgeGroup": "9-11y", "Category": "Jazz" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "McColley", "FirstName": "Courtney"}], "DanceName": "I Won't Look Back", "AgeGroup": "9-11y", "Category": "Lyrical" },
+{ "IsDance": true, "IsDate": false, "IsCategory": false, "IsAwards": false, "Dancer": [{ "LastName": "German", "FirstName": "Jada" }, { "LastName": "Karim", "FirstName": "Hannah" }, { "LastName": "Sartuche", "FirstName": "Alyssa"}], "DanceName": "Is Love Alive", "AgeGroup": "9-11y", "Category": "Lyrical" }
 				]
   				};
   	$("#list").html(template(data));
@@ -224,7 +245,6 @@ $(document).ready(function() {
          </div>
      	<script type="text/javascript">
      	    $("#button-location").click(getGeolocation);
-     	    getGeolocation();
          </script>
     	</div>
     	<div data-role="page" id="about">
@@ -232,10 +252,21 @@ $(document).ready(function() {
            		<center><img class="header-image" src="img/header.png" /></center>
        		</div><!-- /header -->
        		<div data-role="content">
-    			Created by Scott Gross<br>
-    			<h3>Contact Me</h3>
-    			<a href="mailto:sgross2130@gmail.com" data-role="button">sgross2130@gmail.com</a><br>
-    			<a href="tel:2142082506" data-role="button">(214) 208-2506</a>
+    			<div data-role="collapsible-set" data-inset="false">
+                    <div data-role="collapsible">
+	                <h3>Scoring</h3>
+	                <p>Scoring information goes here</p>
+	                </div>
+	
+                	<div data-role="collapsible">
+	                <h3>Contact</h3>
+	                <p>Feel free to contact the app developer at either of the following:
+                    <a data-mini="true" href="mailto:sgross2130@gmail.com" data-role="button" >Email</a><br>
+    			    <a data-mini="true" href="tel:2142082506" data-role="button">Cell Phone</a>
+                    </p>
+	                </div>
+	
+                </div>
     		</div>
 			<div id="subpage-footer" class="footer" data-theme="a" data-role="footer" data-position="fixed" data-tap-toggle="false">
          		<div id="subpage-footernav" class='footernav' data-role='navbar'>
