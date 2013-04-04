@@ -9,7 +9,11 @@
 
 	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 	<script src="http://jquerymobile.com/demos/1.2.1/js/jquery.mobile-1.2.1.js"></script>
-
+    <script>
+        $(function () {
+            $('[data-role=header],[data-role=footer]').fixedtoolbar({ tapToggle: false });
+        });
+    </script>
 
 
 <script id="some-template" type="text/x-handlebars-template">
@@ -17,9 +21,8 @@
 <li data-role="list-divider" data-theme="b" role="heading" class="ui-li ui-li-divider ui-bar-b ">Solo U9</li>
 {{#Dances}}
 <li class="ui-li ui-li-static ui-btn-up-c">
-	<div class="ui-grid-a">
-		<div class="ui-block-a" style="width:40px"><h3 class="ui-li-heading">999</h3></div>
-        <div class="ui-block-b">
+	<div style="width:40px;float:left"><h3 class="ui-li-heading">999</h3></div>
+    <div style="width:250px">
         <h3 class="ui-li-heading">{{DanceName}}</h3>
         <p class="ui-li-desc">
         {{Category}}<br>
@@ -201,7 +204,7 @@ $(document).ready(function() {
         <div data-role="content">
             <div>
                 <div id="map_canvas" style="display:none;"></div>
-                <div id="latlong" class="minitext" style="height:100px;display:none;">
+                <div id="latlong" class="minitext" style="display:none;">
                     <span data-localize="geolocation.section1-item1">Latitude</span>: <span id="Lat"></span>
                     <span data-localize="geolocation.section1-item2">Longitude</span>: <span id="Lon"></span>
                 </div>
@@ -218,7 +221,8 @@ $(document).ready(function() {
              </div>
          </div>
      	<script type="text/javascript">
-     	$("#button-location").click(getGeolocation);
+     	    $("#button-location").click(getGeolocation);
+     	    getGeolocation();
          </script>
     	</div>
     	<div data-role="page" id="about">
