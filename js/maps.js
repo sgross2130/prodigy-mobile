@@ -44,7 +44,7 @@ function showMap(position) {
     $("#Lon").html(position.coords.longitude);
     $("#latlong").show();
     // resize map
-    var newheight = $(window).height() - 230;
+    var newheight = $(window).height();
     $("#map_canvas").height(newheight).show();
     
 }
