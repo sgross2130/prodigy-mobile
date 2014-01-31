@@ -14,7 +14,7 @@ Application description from the config.xml files shows here.
 Scott Gross
 </author>
 
-<preference name="phonegap-version" value="2.5.0" />
+<preference name="phonegap-version" value="3.1.0" />
 
 
 <!-- to enable individual permissions use the following examples -->
